@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>MingoChat Widget Demo</title>
+		<style>
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+					Roboto, sans-serif;
+				line-height: 1.6;
+				margin: 0;
+				padding: 20px;
+				background-color: #f5f5f5;
+			}
+			.container {
+				max-width: 800px;
+				margin: 0 auto;
+				background: white;
+				padding: 30px;
+				border-radius: 10px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+			.header {
+				text-align: center;
+				margin-bottom: 40px;
+			}
+			.demo-section {
+				margin: 30px 0;
+				padding: 20px;
+				background: #f8f9fa;
+				border-radius: 8px;
+				border-left: 4px solid #3b82f6;
+			}
+			.code-block {
+				background: #1e293b;
+				color: #e2e8f0;
+				padding: 15px;
+				border-radius: 6px;
+				font-family: 'Courier New', monospace;
+				font-size: 14px;
+				overflow-x: auto;
+				margin: 10px 0;
+			}
+			.button {
+				background: #3b82f6;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 6px;
+				cursor: pointer;
+				margin: 5px;
+			}
+			.button:hover {
+				background: #2563eb;
+			}
+			.controls {
+				margin: 20px 0;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>🚀 MingoChat Widget Demo</h1>
+				<p>Test the chat widget integration similar to ChannelTalk</p>
+			</div>
+
+			<div class="demo-section">
+				<h2>Widget Controls</h2>
+				<p>Test the widget functionality with these controls:</p>
+				<div class="controls">
+					<button class="button" onclick="showWidget()">
+						Show Widget
+					</button>
+					<button class="button" onclick="hideWidget()">
+						Hide Widget
+					</button>
+					<button class="button" onclick="toggleWidget()">
+						Toggle Widget
+					</button>
+					<button class="button" onclick="checkState()">
+						Check State
+					</button>
+				</div>
+			</div>
+
+			<div class="demo-section">
+				<h2>Custom Trigger Button Demo</h2>
+				<p>
+					This section demonstrates using your own custom button to
+					trigger the widget (with hideLauncher: true):
+				</p>
+				<div class="controls">
+					<button class="button" onclick="initWithCustomTrigger()">
+						Initialize with Custom Trigger
+					</button>
+					<button
+						id="customTrigger"
+						class="button"
+						onclick="toggleWidget()"
+						style="display: none; background: #10b981"
+					>
+						💬 Open Chat (Custom Button)
+					</button>
+					<button class="button" onclick="resetWidget()">
+						Reset Widget
+					</button>
+				</div>
+			</div>
+
+			<div class="demo-section">
+				<h2>Configuration Options</h2>
+				<p>Initialize the widget with different configurations:</p>
+				<div class="controls">
+					<button class="button" onclick="initDefault()">
+						Default (with launcher)
+					</button>
+					<button class="button" onclick="initDefaultOpen()">
+						Opened
+					</button>
+					<button class="button" onclick="initHideLauncher()">
+						Hide Launcher Button
+					</button>
+					<button class="button" onclick="initHideLauncherAndOpen()">
+						Hide Launcher + Start Opened
+					</button>
+					<button
+						class="button"
+						onclick="initWithFullMetadata()"
+						style="background: #8b5cf6"
+					>
+						✨ With Full Metadata
+					</button>
+				</div>
+			</div>
+
+			<div class="demo-section">
+				<h2>API Methods</h2>
+				<p>Available methods you can call:</p>
+				<ul>
+					<li>
+						<code>MingoChat.boot(config)</code> - Initialize the
+						widget
+						<ul>
+							<li>
+								<code>metadata</code> - Client and user
+								information (optional)
+								<ul>
+									<li>
+										<code>client</code> - External client
+										identifier (e.g., 'adwel')
+									</li>
+									<li>
+										<code>user_id</code> - User ID from
+										external system
+									</li>
+									<li>
+										<code>user_name</code> - User's display
+										name
+									</li>
+									<li>
+										<code>user_email</code> - User's email
+										address
+									</li>
+								</ul>
+							</li>
+							<li>
+								<code>auth</code> - Authentication tokens
+								(optional)
+								<ul>
+									<li>
+										<code>access_token</code> - Short-lived
+										access token
+									</li>
+									<li>
+										<code>refresh_token</code> - Long-lived
+										refresh token
+									</li>
+								</ul>
+							</li>
+							<li>
+								<code>hideLauncher</code> - Hide default
+								launcher button (optional)
+							</li>
+							<li>
+								<code>defaultOpen</code> - Start with widget
+								open (optional)
+							</li>
+						</ul>
+					</li>
+					<li>
+						<code>MingoChat.show()</code> - Show/open the widget
+						panel
+					</li>
+					<li>
+						<code>MingoChat.hide()</code> - Hide/close the widget
+						panel
+					</li>
+					<li>
+						<code>MingoChat.toggle()</code> - Toggle widget
+						visibility
+					</li>
+					<li>
+						<code>MingoChat.isOpen()</code> - Check if widget is
+						open
+					</li>
+					<li>
+						<code>MingoChat.updateConfig(config)</code> - Update
+						configuration
+					</li>
+					<li>
+						<code>MingoChat.destroy()</code> - Remove the widget
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script>
+			// For demo purposes, we'll simulate the widget locally
+			// In production, this would load from your CDN
+
+			// Load the built widget from dist/ (widget injects its CSS into Shadow DOM)
+			const script = document.createElement('script');
+			script.src =
+				'https://mingo-v2-widget.vercel.app/mingo-chat.iife.js';
+			script.onload = function () {
+				if (
+					window.MingoChat &&
+					typeof window.MingoChat.boot === 'function'
+				) {
+					// Initialize the widget with default configuration
+					initDefault();
+				} else {
+					console.error(
+						'MingoChat not available or boot function not found',
+					);
+				}
+			};
+			script.onerror = function () {
+				console.error('Failed to load MingoChat script');
+			};
+			document.head.appendChild(script);
+
+			// API Control Functions
+			function showWidget() {
+				if (window.MingoChat) {
+					window.MingoChat.show();
+					console.log('Widget shown');
+				}
+			}
+
+			function hideWidget() {
+				if (window.MingoChat) {
+					window.MingoChat.hide();
+					console.log('Widget hidden');
+				}
+			}
+
+			function toggleWidget() {
+				if (window.MingoChat) {
+					window.MingoChat.toggle();
+					console.log(
+						'Widget toggled. Current state:',
+						window.MingoChat.isOpen(),
+					);
+				}
+			}
+
+			function checkState() {
+				if (window.MingoChat) {
+					const isOpen = window.MingoChat.isOpen();
+					alert(`Widget is currently ${isOpen ? 'OPEN' : 'CLOSED'}`);
+					console.log('Widget state:', isOpen);
+				}
+			}
+
+			// Configuration Functions
+			function initDefault() {
+				if (window.MingoChat) {
+					// Destroy existing instance if any
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore if not initialized
+					}
+
+					// Initialize with default settings
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+					});
+
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log(
+						'Widget initialized with default configuration',
+					);
+				}
+			}
+
+			function initDefaultOpen() {
+				if (window.MingoChat) {
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore
+					}
+
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+						defaultOpen: true,
+					});
+
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log('Widget initialized and opened by default');
+				}
+			}
+
+			function initHideLauncher() {
+				if (window.MingoChat) {
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore
+					}
+
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+						hideLauncher: true,
+					});
+
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log('Widget initialized with hidden launcher');
+					alert(
+						'Launcher button is now hidden. Use the API buttons above to control the widget.',
+					);
+				}
+			}
+
+			function initHideLauncherAndOpen() {
+				if (window.MingoChat) {
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore
+					}
+
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+						hideLauncher: true,
+						defaultOpen: true,
+					});
+
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log(
+						'Widget initialized with hidden launcher and opened',
+					);
+					alert(
+						'Widget is now open with launcher button hidden. Use the API buttons above to control the widget.',
+					);
+				}
+			}
+
+			function initWithFullMetadata() {
+				if (window.MingoChat) {
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore
+					}
+
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+						defaultOpen: true,
+					});
+
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log('Widget initialized with full metadata');
+					alert(
+						'Widget initialized with full user metadata! Check the Settings page to see all the information.',
+					);
+				}
+			}
+
+			function initWithCustomTrigger() {
+				if (window.MingoChat) {
+					try {
+						window.MingoChat.destroy();
+					} catch (e) {
+						// Ignore
+					}
+
+					// Initialize with hidden launcher and metadata
+					window.MingoChat.boot({
+						metadata: {
+							client: 'adwel', // This slug should match the organization's slug in the database
+							user_id: '123',
+							user_name: 'John Doe',
+							user_email: 'john.doe@example.com',
+						},
+						hideLauncher: true,
+					});
+
+					// Show custom trigger button
+					document.getElementById('customTrigger').style.display =
+						'inline-block';
+					console.log(
+						'Widget initialized with custom trigger button',
+					);
+					alert(
+						'Now you can use the custom green button below to control the chat widget!',
+					);
+				}
+			}
+
+			function resetWidget() {
+				if (window.MingoChat) {
+					window.MingoChat.destroy();
+					document.getElementById('customTrigger').style.display =
+						'none';
+					console.log('Widget destroyed');
+					alert(
+						'Widget has been destroyed. Click "Initialize with Default" to restart.',
+					);
+				}
+			}
+		</script>
+	</body>
+</html>
