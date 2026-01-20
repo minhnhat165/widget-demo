@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -6,8 +6,9 @@
 		<title>MingoChat Widget Demo</title>
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-					Roboto, sans-serif;
+				font-family:
+					-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+					sans-serif;
 				line-height: 1.6;
 				margin: 0;
 				padding: 20px;
@@ -65,155 +66,6 @@
 			<div class="header">
 				<h1>🚀 MingoChat Widget Demo</h1>
 				<p>Test the chat widget integration similar to ChannelTalk</p>
-			</div>
-
-			<div class="demo-section">
-				<h2>Widget Controls</h2>
-				<p>Test the widget functionality with these controls:</p>
-				<div class="controls">
-					<button class="button" onclick="showWidget()">
-						Show Widget
-					</button>
-					<button class="button" onclick="hideWidget()">
-						Hide Widget
-					</button>
-					<button class="button" onclick="toggleWidget()">
-						Toggle Widget
-					</button>
-					<button class="button" onclick="checkState()">
-						Check State
-					</button>
-				</div>
-			</div>
-
-			<div class="demo-section">
-				<h2>Custom Trigger Button Demo</h2>
-				<p>
-					This section demonstrates using your own custom button to
-					trigger the widget (with hideLauncher: true):
-				</p>
-				<div class="controls">
-					<button class="button" onclick="initWithCustomTrigger()">
-						Initialize with Custom Trigger
-					</button>
-					<button
-						id="customTrigger"
-						class="button"
-						onclick="toggleWidget()"
-						style="display: none; background: #10b981"
-					>
-						💬 Open Chat (Custom Button)
-					</button>
-					<button class="button" onclick="resetWidget()">
-						Reset Widget
-					</button>
-				</div>
-			</div>
-
-			<div class="demo-section">
-				<h2>Configuration Options</h2>
-				<p>Initialize the widget with different configurations:</p>
-				<div class="controls">
-					<button class="button" onclick="initDefault()">
-						Default (with launcher)
-					</button>
-					<button class="button" onclick="initDefaultOpen()">
-						Opened
-					</button>
-					<button class="button" onclick="initHideLauncher()">
-						Hide Launcher Button
-					</button>
-					<button class="button" onclick="initHideLauncherAndOpen()">
-						Hide Launcher + Start Opened
-					</button>
-					<button
-						class="button"
-						onclick="initWithFullMetadata()"
-						style="background: #8b5cf6"
-					>
-						✨ With Full Metadata
-					</button>
-				</div>
-			</div>
-
-			<div class="demo-section">
-				<h2>API Methods</h2>
-				<p>Available methods you can call:</p>
-				<ul>
-					<li>
-						<code>MingoChat.boot(config)</code> - Initialize the
-						widget
-						<ul>
-							<li>
-								<code>metadata</code> - Client and user
-								information (optional)
-								<ul>
-									<li>
-										<code>client</code> - External client
-										identifier (e.g., 'adwel')
-									</li>
-									<li>
-										<code>user_id</code> - User ID from
-										external system
-									</li>
-									<li>
-										<code>user_name</code> - User's display
-										name
-									</li>
-									<li>
-										<code>user_email</code> - User's email
-										address
-									</li>
-								</ul>
-							</li>
-							<li>
-								<code>auth</code> - Authentication tokens
-								(optional)
-								<ul>
-									<li>
-										<code>access_token</code> - Short-lived
-										access token
-									</li>
-									<li>
-										<code>refresh_token</code> - Long-lived
-										refresh token
-									</li>
-								</ul>
-							</li>
-							<li>
-								<code>hideLauncher</code> - Hide default
-								launcher button (optional)
-							</li>
-							<li>
-								<code>defaultOpen</code> - Start with widget
-								open (optional)
-							</li>
-						</ul>
-					</li>
-					<li>
-						<code>MingoChat.show()</code> - Show/open the widget
-						panel
-					</li>
-					<li>
-						<code>MingoChat.hide()</code> - Hide/close the widget
-						panel
-					</li>
-					<li>
-						<code>MingoChat.toggle()</code> - Toggle widget
-						visibility
-					</li>
-					<li>
-						<code>MingoChat.isOpen()</code> - Check if widget is
-						open
-					</li>
-					<li>
-						<code>MingoChat.updateConfig(config)</code> - Update
-						configuration
-					</li>
-					<li>
-						<code>MingoChat.destroy()</code> - Remove the widget
-					</li>
-				</ul>
 			</div>
 		</div>
 
